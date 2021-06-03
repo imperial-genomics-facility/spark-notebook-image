@@ -1,0 +1,11 @@
+channels:
+ - conda-forge
+dependencies:
+ - pip
+ - pip:
+   - delta-spark==1.0.0
+   - pyspark==3.1.2
+   - plotly==4.14.3
+   - pyarrow==4.0.1
+   - pandas==1.2.4
+   - koalas==1.8.0
