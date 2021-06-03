@@ -8,6 +8,8 @@ USER root
 WORKDIR /
 RUN apt-get -y update &&   \
     apt-get install --no-install-recommends -y \
+      openjdk-11-jre-headless \
+      ca-certificates-java \
       libfontconfig1 \
       libxrender1 \
       libreadline-dev \
