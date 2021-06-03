@@ -28,7 +28,8 @@ RUN apt-get -y update &&   \
       git  && \
     apt-get purge -y --auto-remove && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    rm -rf /tmp/*
 USER $NB_USER
 WORKDIR /home/$NB_USER
 ENV TMPDIR=/tmp
@@ -37,9 +38,11 @@ RUN rm -f /home/$NB_USER/environment.yml && \
     rm -f /home/$NB_USER/Dockerfile
 COPY environment.yml /home/$NB_USER/environment.yml
 COPY Dockerfile /home/$NB_USER/Dockerfile
+COPY entrypoint.sh /home/$NB_USER/entrypoint.sh
 USER root
 RUN chown ${NB_UID} /home/$NB_USER/environment.yml && \
-    chown ${NB_UID} /home/$NB_USER/Dockerfile
+    chown ${NB_UID} /home/$NB_USER/Dockerfile && \
+    chmod a+x /home/$NB_USER/entrypoint.sh
 USER $NB_USER
 WORKDIR /home/$NB_USER
 RUN conda update -n base -c defaults conda && \
