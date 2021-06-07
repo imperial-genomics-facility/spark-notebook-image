@@ -47,6 +47,11 @@ RUN chown ${NB_UID} /home/$NB_USER/environment.yml && \
     chmod a+x /home/$NB_USER/entrypoint.sh
 USER $NB_USER
 WORKDIR /home/$NB_USER
+RUN wget -q -O /tmp/spark-3.1.2-bin-hadoop3.2.tgz \
+      https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz && \
+    tar -xzf /tmp/spark-3.1.2-bin-hadoop3.2.tgz && \
+    rm -f /tmp/spark-3.1.2-bin-hadoop3.2.tgz
+ENV SPARK_HOME=/home/$NB_USER/spark-3.1.2-bin-hadoop3.2
 RUN conda update -n base -c defaults conda && \
     conda env update -q -n notebook-env --file /home/$NB_USER/environment.yml && \
     conda clean -a -y && \
