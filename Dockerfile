@@ -50,8 +50,14 @@ WORKDIR /home/$NB_USER
 RUN wget -q -O /tmp/spark-3.1.2-bin-hadoop3.2.tgz \
       https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz && \
     tar -xzf /tmp/spark-3.1.2-bin-hadoop3.2.tgz && \
-    rm -f /tmp/spark-3.1.2-bin-hadoop3.2.tgz
+    rm -f /tmp/spark-3.1.2-bin-hadoop3.2.tgz && \
+    wget -q -O /tmp/apache-hive-3.1.2-bin.tar.gz \
+      https://downloads.apache.org/hive/hive-3.1.2/apache-hive-3.1.2-bin.tar.gz && \
+    tar -xzf /tmp/apache-hive-3.1.2-bin.tar.gz && \
+    rm -f /tmp/apache-hive-3.1.2-bin.tar.gz
 ENV SPARK_HOME=/home/$NB_USER/spark-3.1.2-bin-hadoop3.2
+ENV HIVE_HOME=/home/$NB_USER/apache-hive-3.1.2-bin
+ENV PATH=$PATH:$HIVE_HOME/bin
 RUN conda update -n base -c defaults conda && \
     conda env update -q -n notebook-env --file /home/$NB_USER/environment.yml && \
     conda clean -a -y && \
